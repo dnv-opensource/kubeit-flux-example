@@ -3,7 +3,7 @@ apiVersion: source.toolkit.fluxcd.io/v1beta1
 kind: GitRepository
 metadata:
   name: tenant
-  namespace: simple-example
+  namespace: sops-staging
 spec:
   interval: 1m
   ref:
