@@ -8,7 +8,7 @@ spec:
   interval: 1m
   targetNamespace: simple-example
   sourceRef:
-    kind: OCIRepository
+    kind: GitRepository
     name: tenant
   path: infra/staging
   prune: true
