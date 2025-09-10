@@ -6,5 +6,5 @@ metadata:
 spec:
   interval: 1m
   ref:
-    branch: main
+    branch: BARPYR/flux-test
   url: https://github.com/dnv-gssit/kubeit-flux-example.git
