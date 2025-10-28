@@ -7,4 +7,4 @@ spec:
   interval: 1m
   ref:
     branch: main
-  url: https://github.com/dnv-gssit/kubeit-flux-example.git
+  url: https://github.com/dnv-internal/kubeit-flux-example.git
