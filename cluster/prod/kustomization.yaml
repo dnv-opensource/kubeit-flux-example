@@ -3,3 +3,4 @@ kind: Kustomization
 resources:
   - infrastructure-sync.yaml
   - repo.yaml
+  - external-secret.yaml
