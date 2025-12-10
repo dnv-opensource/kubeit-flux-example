@@ -1,16 +1,13 @@
-apiVersion: helm.toolkit.fluxcd.io/v2beta1
+apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
-  name: example-apiapiVersion: helm.toolkit.fluxcd.io/v2beta1
-kind: HelmRelease
-metadata:
-  name: surveys-webapi-ship-smc
-  namespace: ship-smc-dvo-we-env
+  name: example-api
+  namespace: tenant2-flux
 spec:
   interval: 1m
   chart:
     spec:
-      chart: gitops/charts/surveys-webapi/v0.4.000
+      chart: gitops/charts/example-api/v0.4.000
       sourceRef:
         kind: GitRepository
         name: git-repository-ship
