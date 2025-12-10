@@ -1,0 +1,41 @@
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: example-apiapiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: surveys-webapi-ship-smc
+  namespace: ship-smc-dvo-we-env
+spec:
+  interval: 1m
+  chart:
+    spec:
+      chart: gitops/charts/surveys-webapi/v0.4.000
+      sourceRef:
+        kind: GitRepository
+        name: git-repository-ship
+  values:
+    environmentKey: tenant2-flux
+    platform-service:
+      replicaCount: 1
+      image:
+        full: nginxinc/nginx-unprivileged
+        pullPolicy: IfNotPresent
+      resources:
+        requests:
+          cpu: 10m
+          memory: 64Mi
+        limits:
+          cpu: 50m
+          memory: 128Mi
+      initContainers:
+        - name: data-check
+          image:
+            full: "nginxinc/nginx-unprivileged"
+            pullPolicy: IfNotPresent
+#          resources:
+#            requests:
+#              cpu: 50m
+#              memory: 128Mi
+#            limits:
+#              memory: 256Mi
