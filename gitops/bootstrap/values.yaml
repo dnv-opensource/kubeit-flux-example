@@ -20,3 +20,4 @@ dev:
   - namespace: tenant2-flux
     shortRegion: we
     clusterColour: dev033
+    workloadIdentityClientId: 8e8c8d25-ccbe-4c50-a864-e0dc2046d46e
