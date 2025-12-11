@@ -10,7 +10,7 @@ spec:
       chart: gitops/charts/example-api/v0.4.000
       sourceRef:
         kind: GitRepository
-        name: git-repository-ship
+        name: git-repository-tenant2
   values:
     environmentKey: tenant2-flux
     platform-service:
