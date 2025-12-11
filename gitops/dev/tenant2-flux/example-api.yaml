@@ -5,6 +5,7 @@ metadata:
   namespace: tenant2-flux
 spec:
   interval: 1m
+  serviceAccountName: tenant2-flux-sa
   chart:
     spec:
       chart: gitops/charts/example-api/v0.4.000
