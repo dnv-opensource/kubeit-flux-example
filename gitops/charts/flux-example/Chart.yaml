@@ -1,0 +1,13 @@
+
+apiVersion: v2
+name: flux-bootstrap
+description: Flux CD Bootstrap with multi-environment support
+type: application
+appVersion: "2.3.0"
+keywords:
+  - flux
+  - gitops
+  - bootstrap
+maintainers:
+  - name: Abhik Chakraborty
+    email: abhik.chakraborty@dnv.com
