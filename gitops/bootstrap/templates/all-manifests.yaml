@@ -1,2 +1,0 @@
-# Generate all manifests for sepcified environment
-{{- include "bootstrap.allManifests" . }}
