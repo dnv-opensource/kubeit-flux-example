@@ -1,0 +1,19 @@
+{{- if .Values.environments.prod.enabled }}
+apiVersion: source.toolkit.fluxcd.io/v1
+kind: GitRepository
+metadata:
+  name: flux-system-stage
+  namespace: {{ .Values.global.namespace }}
+  labels:
+    {{- include "flux-bootstrap.labels" . | nindent 4 }}
+    environment: stage
+spec:
+  interval: {{ .Values.environments.staging.syncInterval }}
+  url: {{ .Values.git.url }}
+  ref:
+    branch: {{ .Values.git.branch }}
+  {{- if .Values.sshKey.enabled }}
+  secretRef:
+    name: {{ .Values.git.secretName }}
+  {{- end }}
+{{- end }}
