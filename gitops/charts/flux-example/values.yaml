@@ -1,0 +1,41 @@
+# Global settings
+global:
+  namespace: flux-system
+
+# Git repository configuration 
+git:
+  url: "https://github.com/dnv-internal/gssit-kubeit-tenant2"
+  branch: feature/flux-example
+  path: cluster
+  secretName: flux-system
+
+# Environment to deploy
+environments:
+  prod:
+    enabled: true
+    namespace: prod
+    syncInterval: 10m
+    retryInternal: 1m
+    prune: true
+
+  staging:
+    enabled: true
+    namespace: staging
+    syncInterval: 5m
+    retryInterval: 1m
+    prune: true
+
+# Infrastructure base components
+infrastructure:
+  enabled: true
+  namespace: infra
+
+  networkPolicy:
+    enabled: true
+
+  serviceAccount:
+    enabled: true
+    name: default-sa
+
+  pod:
+    enabled: true
