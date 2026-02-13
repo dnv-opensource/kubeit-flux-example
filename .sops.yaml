@@ -1,3 +1,4 @@
+---
 creation_rules:
   - path_regex: .*/prod/.*
     encrypted_regex: ^(stringData)$

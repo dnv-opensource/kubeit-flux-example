@@ -7,4 +7,3 @@ dependencies:
   - name: platform-service
     version: 1.4.7
     repository: "https://dnvgl.github.io/service-mesh-chart"
-
