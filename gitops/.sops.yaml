@@ -1,0 +1,7 @@
+creation_rules:
+  - path_regex: .*/prod/.*
+    encrypted_regex: ^(stringData)$
+    azure_keyvault: https://sops-test-kv.vault.azure.net/keys/sops-test-key/0000
+  - path_regex: .*/staging/.*
+    encrypted_regex: ^(stringData)$
+    azure_keyvault: https://sops-test-kv.vault.azure.net/keys/sops-test-key/0000
