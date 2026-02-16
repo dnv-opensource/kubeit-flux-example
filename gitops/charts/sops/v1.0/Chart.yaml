@@ -1,5 +1,10 @@
-apiVersion: v1
-appVersion: "1.0"
-description: Sops example
+---
+apiVersion: v2
+description: SOPS example
 name: sops
 version: 0.0.1
+dependencies:
+  - name: kubeit-deployment-chart
+    alias: deploy
+    version: ~2.2.2
+    repository: https://dnv-gssit.github.io/kubeit-charts

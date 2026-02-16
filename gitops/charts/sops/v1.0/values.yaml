@@ -1,7 +1,1 @@
-platform-service:
-  app: admin-api
-  version: v1
-
-  gateway:
-    exposeService: true
-    name: istio-system/global-https-internal-default-gateway
+---
