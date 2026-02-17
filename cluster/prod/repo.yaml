@@ -1,0 +1,10 @@
+apiVersion: source.toolkit.fluxcd.io/v1
+kind: GitRepository
+metadata:
+  name: tenant
+  namespace: tenant2-sops-prod
+spec:
+  interval: 1m
+  ref:
+    branch: feature/test
+  url: https://github.com/dnv-opensource/kubeit-flux-example.git
