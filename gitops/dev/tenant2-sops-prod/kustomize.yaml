@@ -5,7 +5,7 @@ metadata:
   namespace: tenant2-sops-prod
 spec:
   interval: 1m
-  path: .
+  path: ./gitops/dev/sops-prod
   prune: true
   decryption:
     provider: sops

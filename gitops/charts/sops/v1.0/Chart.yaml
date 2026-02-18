@@ -1,5 +1,0 @@
----
-apiVersion: v2
-description: SOPS example
-name: sops
-version: 0.0.1
