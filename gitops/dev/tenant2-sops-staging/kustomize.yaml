@@ -5,8 +5,11 @@ metadata:
   namespace: tenant2-sops-staging
 spec:
   interval: 1m
-  path: .
+  path: ./gitops/dev/sops-staging
   prune: true
+  serviceAccountName: tenant2-flux-sa
+  sourceRef:
+    kind: GitRepository
+    name: git-repository-tenant2
   decryption:
     provider: sops
-
