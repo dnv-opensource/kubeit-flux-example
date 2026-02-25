@@ -6,7 +6,7 @@ metadata:
   namespace: tenant2-sops-prod
 spec:
   interval: 1m
-  path: ./gitops/dev/tenant2-sops-prod/secret
+  path: ./gitops/dev/secrets/prod
   prune: true
   serviceAccountName: tenant2-flux-sa
   sourceRef:
