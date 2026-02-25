@@ -1,0 +1,12 @@
+---
+apiVersion: v2
+name: Flux Bootstrap
+description: Bootstrap ArgoCD tenant repo
+type: application
+version: 0.1.0
+appVersion: 0.1.0
+
+dependencies:
+- name: flux-bootstrap
+  version: "0.3.1"
+  repository: "https://dnvgl.github.io/service-mesh-chart"

@@ -1,58 +1,77 @@
 # kubeit-flux-example
 
-Testing SOPS with flux
+This repository uses [flux-bootstrap](https://github.com/dnvgl/service-mesh-chart/tree/master/charts/flux-bootstrap) to deploy a sample applications to a Kubernetes cluster.
 
-SOPS (Secrets OPerationS) is a tool for managing and encrypting secrets directly within YAML, JSON, ENV, or INI files, using encryption providers like AWS KMS, GCP KMS, Azure Key Vault keys, etc.
-This example demonstrates how to use Azure Key Vault keys with SOPS.
+`bootstrap/values.yaml` file contains environments for FluxCD to deploy.
 
-How to use it?
-1. Before starting the development cluster, create a new branch in the kubeit-flux-example repository where you will place your changes.
+On self-support tenant's repo add this repo to deploy examples:
 
-2. In prod/repo.yaml and staging/repo.yaml change branch to your working branch.
-
-3. In your dev cluster settings (voa-platform-infra repository), change the bootstrap_force_minimal_config flag to false. This ensures the cluster uses the appropriate voa-platform-apps/argocd/env-config/values-dev.yaml file instead of the minimal values file. Update the values-dev.yaml file to point to your new branch, and run the deploy-dev pipeline. This will trigger the deployment of Flux examples (a basic SOPS application should appear in ArgoCD, though it may initially show error events—ignore these until encryption and workload identity is configured).
-
-4. Create User Assigned Managed Identity in the same subscription as cluster (name of managed identity must end with '-dev-tenant2' e.g. 'mi-dev-tenant2') and assign Role 'Managed Identity Contributor' to Az_KubeIT_AcrReader_Env_Dev security group.
-   Get clientId of the newly created managed identity and update infra/base/service-account.yaml.
-
-5. In the Azure Portal, create an example Key Vault to handle the key for encrypting and decrypting secrets in this example. Inside the Key Vault, generate a new key.
-
-6. Grant the Key Vault Administrator role to your new managed identity for the newly created Key Vault (PIM may be required), and get/list permissions for secrets. This will allow SOPS to decrypt secrets using the key in the Key Vault.
-
-7. Modify the .sops.yaml file to include the URL of the newly generated key in your Key Vault.
-
-8. Install SOPS on your local machine by following the instructions at https://github.com/getsops/sops.
-
-9. To encrypt secret.yaml files, use the following command (replace the placeholder values with the URL of your Key Vault key and the path to your secret.yaml file):
-sops encrypt --azure-kv https://x.vault.azure.net/keys/sops-test-key/0000 prod/secret.yaml
-This command will create an encrypted output that should replace the original secret.yaml file. It encrypts sensitive fields like stringData: password, making them inaccessible without the key.
-Hint: You may need to run export AZURE_ADDITIONALLY_ALLOWED_TENANTS=* before encrypting.
-
-Encrypted secret should look similar to this:
 ```yaml
-apiVersion: v1
-kind: Secret
-metadata:
-    name: secret-basic-auth
-type: Opaque
-stringData:
-    password: ENC[AES256_GCM,data:G2UL3Yhh7o4Re6X2QC2Fqj7r,iv:eUkumfOtDJLCmarlNn0G56Ip/1lKKnU+Dzd3xFOeGEc=,tag:Es1JVQxPmi2mZ6Alo82Q1g==,type:str]
-sops:
-    kms: []
-    gcp_kms: []
-    azure_kv:
-        - vault_url: https://sops-test-kv.vault.azure.net
-          name: sops-test-key
-          version: 60e20b99212641feac3f44005d06b182
-          created_at: "2025-01-09T12:02:53Z"
-          enc: ufltDLJNP11lHKUlcxwtYCQaXezmPHE4WkAYlqSKvAJRgOZf0LefmbO8GjC4OrSfvramCZSgPZ0c0DFDYM6rOnNKH9Y4owrgTQX4tGy8fuBl1XTjeSXTWWJuSN4uDeyIe2K5-C8ICsG3GnWY6ohgJsS3RLEMtTq0ohx1NjsCSNzEiG6Q26sFHyxgG2TFD3BrF-Hw4cBo64D3DrxnAIrVyh2_mwsjKrFaOdwmIeCIeVwskR3HQoom3v4va_yNijQDhr0UqDUa7GUsNirSm2dmMdknyD6pzoLSeLqDLoIaF3_OGdabCbVaX6wFhSCkCaVLogYdjyVgyY7Z_-2KGnmVzQ
-    hc_vault: []
-    age: []
-    lastmodified: "2025-01-09T12:02:55Z"
-    mac: ENC[AES256_GCM,data:J1/qburPlWFex2hpFh2Im09aXD8eQc6lkAuwickRdaC7CCRAeiNUHWhHNFzjs0KTtHLz9PE3Mz8rluZpHh40k4oSDn7QqJgRhhQnrLaU7frRFfT6SqLCwqR6n6y4t28bVoyC9CshwaKTxFpl+15SLDQ3HyoyfvS8xKc/m5d3F/w=,iv:dOfyQkToIluoCYPTdlUZF0GX/+1K+LaC/V6/qpaMIzw=,tag:Y+i7iGkbWYvfglhgKbAXeg==,type:str]
-    pgp: []
-    encrypted_regex: ^(stringData)$
-    version: 3.9.2
+      repositories:
+        repoURL: https://github.com/dnv-opensource/kubeit-flux-example.git
+        targetRevision: main
+        path: gitops/bootstrap
+        autosync: true
 ```
 
-10. After modifying the secret.yaml files, push your changes to your branch.
+## Deploy application using kind:helmrelease
+
+Custom charts are defined at `charts` directory. Those helm charts usually use dependency helm chart to deploy applications.
+Thanks to that, it is easy to control version of the dependency helm chart and update it when needed.
+
+`dev/tenant2-flux` directory contains a sample application that is deployed using `kind: HelmRelease`.
+
+## Test Flux sops
+
+1. Create sops key in Azure Key Vault:
+
+   ```bash
+   az keyvault key create --name sops-key --vault-name kubeit-dev-kv-sh-we --protection software --ops encrypt decrypt
+   ```
+
+2. Grant access to the key for the managed identity used by the cluster (SOPS Managed Identity).
+   Assign `get`, `encrypt`, and `decrypt` permissions for the key to SOPS security group: `Az_KubeIT_SOPS_Env_Dev`.
+
+3. Retrieve the key URL for the created key in Azure Key Vault:
+
+   ```bash
+   az keyvault key show --name sops-key --vault-name kubeit-dev-kv-sh-we --query key.kid
+   ```
+
+4. Create file `.sops.yaml` to allow encrypting secrets using the created key in Azure Key Vault:
+
+   ```yaml
+   creation_rules:
+     - path_regex: secret-decrypted.yaml
+       key_groups:
+         - azure_kv:
+             # URL of the key in Azure Key Vault
+             - "https://my-kv.vault.azure.net/keys/sops-key/1234567890abcdef"
+   ```
+
+5. Download sops binary from `https://github.com/getsops/sops/releases`.
+
+6. Create a secret file `secret-decrypted.yaml` with the content you want to encrypt:
+
+   ```yaml
+   apiVersion: v1
+   kind: Secret
+   metadata:
+     name: secret-basic-auth
+     namespace: tenant2-sops-prod
+   type: Opaque
+   stringData:
+     password: password-test
+   ```
+
+7. Encrypt the secret file using sops:
+
+   ```bash
+   sops encrypt --azure-kv https://my-kv.vault.azure.net/keys/sops-key/1234567890abcdef secret-decrypted.yaml > secret-encrypted.yaml
+   ```
+
+   and store encrypted file as `secret-encrypted.yaml` in the repository under `secrets` directory.
+
+8. Deploy to cluster using FluxCD. `kind:Kustomization` should use **sops** provider.
+
+9. Check if decrypted secret is present on cluster.

@@ -1,0 +1,29 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: example-api
+  namespace: tenant2-flux
+spec:
+  interval: 1m
+  serviceAccountName: tenant2-flux-sa
+  chart:
+    spec:
+      chart: gitops/charts/example-api/v0.4.000
+      sourceRef:
+        kind: GitRepository
+        name: git-repository-tenant2
+  values:
+    environmentKey: tenant2-flux
+    platform-service:
+      replicaCount: 1
+      image:
+        full: nginxinc/nginx-unprivileged
+        pullPolicy: IfNotPresent
+      resources:
+        requests:
+          cpu: 10m
+          memory: 64Mi
+        limits:
+          cpu: 50m
+          memory: 128Mi
