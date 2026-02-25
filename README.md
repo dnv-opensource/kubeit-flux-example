@@ -4,6 +4,16 @@ This repository uses [flux-bootstrap](https://github.com/dnvgl/service-mesh-char
 
 `bootstrap/values.yaml` file contains environments for FluxCD to deploy.
 
+On self-support tenant's repo add this repo to deploy examples:
+
+```yaml
+      repositories:
+        repoURL: https://github.com/dnv-opensource/kubeit-flux-example.git
+        targetRevision: main
+        path: gitops/bootstrap
+        autosync: true
+```
+
 ## Deploy application using kind:helmrelease
 
 Custom charts are defined at `charts` directory. Those helm charts usually use dependency helm chart to deploy applications.
