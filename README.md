@@ -59,5 +59,9 @@ Thanks to that, it is easy to control version of the dependency helm chart and u
    ```bash
    sops encrypt --azure-kv https://my-kv.vault.azure.net/keys/sops-key/1234567890abcdef secret-decrypted.yaml > secret-encrypted.yaml
    ```
-   
-   and store encrypted file as `secret-encrypted.yaml` in the repository.
+
+   and store encrypted file as `secret-encrypted.yaml` in the repository under `secret` directory.
+
+8. Deploy to cluster using FluxCD. `kind:Kustomization` should use **sops** provider.
+
+9. Check if decrypted secret is present on cluster.

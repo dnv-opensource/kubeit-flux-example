@@ -1,3 +1,4 @@
+---
 apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
@@ -5,7 +6,7 @@ metadata:
   namespace: tenant2-sops-staging
 spec:
   interval: 1m
-  path: ./gitops/dev/sops-staging
+  path: ./gitops/dev/tenant2-sops-staging/secret
   prune: true
   serviceAccountName: tenant2-flux-sa
   sourceRef:
