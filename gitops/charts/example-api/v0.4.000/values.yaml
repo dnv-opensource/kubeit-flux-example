@@ -5,3 +5,8 @@ platform-service:
   gateway:
     exposeService: true
     name: istio-system/global-https-internal-default-gateway
+  fluxAutomation:
+    enabled: true
+    provider: azure
+    interval: 1m
+    
