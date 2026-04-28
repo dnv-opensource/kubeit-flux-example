@@ -19,6 +19,7 @@ spec:
       replicaCount: 1
       image:
         full: nginxinc/nginx-unprivileged
+        repository: nginxinc/nginx-unprivileged
         pullPolicy: IfNotPresent
         fluxAutomation:
           enabled: true
