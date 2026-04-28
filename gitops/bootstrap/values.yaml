@@ -7,7 +7,7 @@ pathTemplate: "{{ print `./gitops/` .prodOrNonprod `/` .namespace }}"
 #pathTemplate: "{{ print .prodOrNonprod `/regions/` .region `/` .namespace }}"
 
 useServiceMeshChartHelmRepository: false
-useImageAutomation: false
+useImageAutomation: true
 
 gitRepoNameTemplate: "{{ print `git-repository-` .tenantName }}"
 kustomizationNameTemplate: "{{ print `flux-kustomization-` .tenantName }}"
