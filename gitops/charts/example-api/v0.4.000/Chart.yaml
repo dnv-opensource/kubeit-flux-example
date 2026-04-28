@@ -5,5 +5,5 @@ name: exampleapi
 version: 0.0.1
 dependencies:
   - name: platform-service
-    version: 1.5.3
+    version: 1.5.7
     repository: "https://dnvgl.github.io/service-mesh-chart"

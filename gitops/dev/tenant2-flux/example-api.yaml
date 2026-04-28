@@ -20,6 +20,10 @@ spec:
       image:
         full: nginxinc/nginx-unprivileged
         pullPolicy: IfNotPresent
+        fluxAutomation:
+          enabled: true
+          provider: azure
+          interval: 1m
       resources:
         requests:
           cpu: 10m
