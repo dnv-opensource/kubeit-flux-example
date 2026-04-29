@@ -23,8 +23,14 @@ spec:
         pullPolicy: IfNotPresent
         fluxAutomation:
           enabled: true
-          provider: azure
+          # generic because it is not on 
+          provider: generic
           interval: 1m
+          filterTags:
+            pattern: '^\d+\.\d+\.\d+$'
+          policy:
+            semver:
+              range: '>=1.0.0'
       resources:
         requests:
           cpu: 10m
