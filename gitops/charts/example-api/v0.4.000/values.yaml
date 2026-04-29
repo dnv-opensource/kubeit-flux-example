@@ -8,6 +8,11 @@ platform-service:
   image:
     fluxAutomation:
       enabled: true
-      provider: azure
+      provider: generic
       interval: 1m
+      filterTags:
+        pattern: '^\d+\.\d+\.\d+$'
+      policy:
+        semver:
+          range: '>=1.0.0'
 
