@@ -23,7 +23,7 @@ spec:
         pullPolicy: IfNotPresent
         fluxAutomation:
           enabled: true
-          # generic because it is not on 
+          # set to generic, pulling from docker hub. Set Azure if image is being pulled from ACR
           provider: generic
           interval: 1m
           filterTags:
