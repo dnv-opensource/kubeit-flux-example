@@ -18,7 +18,7 @@ spec:
     platform-service:
       replicaCount: 1
       image:
-        repository: nginxinc/nginx-unprivileged
+        repository: kubeitglobalsvcauxacrwe.azurecr.io/nginxinc/nginx-unprivileged
         tag: latest
         pullPolicy: IfNotPresent
         fluxAutomation:
@@ -31,6 +31,15 @@ spec:
           policy:
             semver:
               range: '>=1.0.0'
+      securityContext:
+        runAsUser: 101
+        runAsGroup: 101
+        runAsNonRoot: true
+        allowPrivilegeEscalation: false
+        capabilities:
+          drop:
+            - ALL
+        readOnlyRootFilesystem: true
       resources:
         requests:
           cpu: 10m
