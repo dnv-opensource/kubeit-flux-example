@@ -41,3 +41,15 @@ dev:
     shortRegion: eus2
     clusterColour: blue
     workloadIdentityClientId: 5512dad8-0704-439c-9f5b-78da63c15875
+  - namespace: tenant2-flux
+    shortRegion: we
+    clusterColour: green
+    workloadIdentityClientId: 45fe5a01-c1dd-4b34-beb1-e38496e41c7b
+  - namespace: tenant2-sops-staging
+    shortRegion: we
+    clusterColour: green
+    workloadIdentityClientId: 45fe5a01-c1dd-4b34-beb1-e38496e41c7b
+  - namespace: tenant2-sops-prod
+    shortRegion: we
+    clusterColour: green
+    workloadIdentityClientId: 45fe5a01-c1dd-4b34-beb1-e38496e41c7b
