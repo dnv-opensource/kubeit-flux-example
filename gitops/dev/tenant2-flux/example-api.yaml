@@ -31,7 +31,7 @@ spec:
           policy:
             semver:
               range: '>=1.0.0'
-      securityContext:
+      containerSecurityContext:
         runAsUser: 101
         runAsGroup: 101
         runAsNonRoot: true
