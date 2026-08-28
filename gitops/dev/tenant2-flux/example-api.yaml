@@ -27,10 +27,11 @@ spec:
           provider: azure
           interval: 1m
           filterTags:
-            pattern: '^\d+\.\d+\.\d+$'
+            pattern: '^(?P<version>\d+)-alpine$'
+            extract: '$version'
           policy:
-            semver:
-              range: '>=1.0.0'
+            numerical:
+              order: asc
       containerSecurityContext:
         runAsUser: 101
         runAsGroup: 101
