@@ -49,6 +49,6 @@ spec:
           memory: 128Mi
       volumes:
         - name: tmp
-          monthPath: "/tmp"
+          mountPath: "/tmp"
           volumeDefinition: |
             emptyDir: {}
