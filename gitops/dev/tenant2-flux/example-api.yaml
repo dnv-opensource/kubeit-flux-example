@@ -24,7 +24,7 @@ spec:
         fluxAutomation:
           enabled: true
           # set to generic, pulling from docker hub. Set Azure if image is being pulled from ACR
-          provider: generic
+          provider: azure
           interval: 1m
           filterTags:
             pattern: '^\d+\.\d+\.\d+$'
