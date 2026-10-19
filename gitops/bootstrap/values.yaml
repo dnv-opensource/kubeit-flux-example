@@ -22,6 +22,11 @@ dev:
     clusterColour: blue
     clusterSubdomain: dev002
     workloadIdentityClientId: 5512dad8-0704-439c-9f5b-78da63c15875
+  - namespace: tenant2-flux
+    shortRegion: eus2
+    clusterColour: blue
+    clusterSubdomain: dev002
+    workloadIdentityClientId: 5512dad8-0704-439c-9f5b-78da63c15875
   - namespace: tenant2-sops-prod
     shortRegion: eus2
     clusterColour: blue
