@@ -3,7 +3,6 @@ repoURL: https://github.com/dnv-opensource/kubeit-flux-example.git
 branch: main
 
 fluxSshKeyVaultUrl: https://kubeit-dev-kv-sh-we.vault.azure.net/
-branch: main
 
 pathTemplate: "{{ print `./gitops/` .prodOrNonprod `/` .namespace }}"
 #pathTemplate: "{{ print .prodOrNonprod `/` .namespace }}"
@@ -16,8 +15,6 @@ gitRepoNameTemplate: "{{ print `git-repository-` .tenantName }}"
 kustomizationNameTemplate: "{{ print `flux-kustomization-` .tenantName }}"
 
 fluxSshSecretNameTemplate: "flux-sshkeys" # secret name in the gitops repo, is this the name as in argoApps?
-#fluxSshSecretNameTemplate: "sshkey"
-useServiceMeshChartHelmRepository: true
 
 dev:
   environments:
@@ -48,7 +45,7 @@ dev:
     workloadIdentityClientId: 8e8c8d25-ccbe-4c50-a864-e0dc2046d46e
   - namespace: tenant2-sops-prod
     shortRegion: we
-    clusterColour: dev033
+    clusterColour: blue
     clusterSubdomain: dev033
     workloadIdentityClientId: 8e8c8d25-ccbe-4c50-a864-e0dc2046d46e
   - namespace: tenant2-flux
