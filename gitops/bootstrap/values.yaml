@@ -18,7 +18,6 @@ kustomizationNameTemplate: "{{ print `flux-kustomization-` .tenantName }}"
 fluxSshSecretNameTemplate: "flux-sshkeys" # secret name in the gitops repo, is this the name as in argoApps?
 #fluxSshSecretNameTemplate: "sshkey"
 useServiceMeshChartHelmRepository: true
-useImageAutomation: false
 
 dev:
   environments:
