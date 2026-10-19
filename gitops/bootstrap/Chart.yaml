@@ -8,5 +8,5 @@ appVersion: 0.1.0
 
 dependencies:
 - name: flux-bootstrap
-  version: "0.3.3"
+  version: "0.3.4"
   repository: "https://dnvgl.github.io/service-mesh-chart"
