@@ -17,7 +17,7 @@ fluxSshSecretNameTemplate: "flux-sshkeys" # secret name in the gitops repo, is t
 
 dev:
   environments:
-  - namespace: tenant2-sops
+  - namespace: tenant2-sops-staging
     shortRegion: eus2
     clusterColour: dev002
     workloadIdentityClientId: 5512dad8-0704-439c-9f5b-78da63c15875
