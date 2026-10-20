@@ -53,3 +53,22 @@ spec:
           mountPath: "/tmp"
           volumeDefinition: |
             emptyDir: {}
+      requestAuthentication:
+        enabled: true
+        jwtRules:
+          - issuer: "https://sts.windows.net/adf10e2b-b6e9-41d6-be2f-c12bb566019c/"
+            jwksUri: "https://login.microsoftonline.com/adf10e2b-b6e9-41d6-be2f-c12bb566019c/discovery/keys"
+            audiences:
+              - 5512dad8-0704-439c-9f5b-78da63c15875
+      authorizationPolicy:
+        enabled: true
+        authorizedServices: []
+      networkPolicy:
+        enabled: true
+      defaultRouting:
+        loadBalancerPolicy: ROUND_ROBIN
+        retries:
+          enabled: true
+          settings:
+            attempts: 3
+            perTryTimeout: 2s
