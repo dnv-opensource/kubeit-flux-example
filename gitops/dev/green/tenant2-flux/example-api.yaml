@@ -1,0 +1,80 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: example-api
+  namespace: tenant2-flux
+spec:
+  interval: 1m
+  serviceAccountName: tenant2-flux-sa
+  chart:
+    spec:
+      chart: gitops/charts/example-api/v0.4.000
+      sourceRef:
+        kind: GitRepository
+        name: git-repository-tenant2
+  values:
+    environmentKey: tenant2-flux
+    platform-service:
+      replicaCount: 1
+      image:
+        repository: kubeitglobalsvcauxacrwe.azurecr.io/nginxinc/nginx-unprivileged
+        tag: latest
+        pullPolicy: IfNotPresent
+        fluxAutomation:
+          enabled: true
+          # set to generic, pulling from docker hub. Set Azure if image is being pulled from ACR
+          provider: azure
+          interval: 1m
+          filterTags:
+            pattern: '^(?P<version>\d+)-alpine$'
+            extract: '$version'
+          policy:
+            numerical:
+              order: asc
+      containerSecurityContext:
+        runAsUser: 101
+        runAsGroup: 101
+        runAsNonRoot: true
+        allowPrivilegeEscalation: false
+        capabilities:
+          drop:
+            - ALL
+        readOnlyRootFilesystem: true
+      resources:
+        requests:
+          cpu: 10m
+          memory: 64Mi
+        limits:
+          cpu: 50m
+          memory: 128Mi
+      volumes:
+        - name: tmp
+          mountPath: "/tmp"
+          volumeDefinition: |
+            emptyDir: {}
+      requestAuthentication:
+        enabled: true
+        jwtRules:
+          - issuer: "https://sts.windows.net/adf10e2b-b6e9-41d6-be2f-c12bb566019c/"
+            jwksUri: "https://login.microsoftonline.com/adf10e2b-b6e9-41d6-be2f-c12bb566019c/discovery/keys"
+            audiences:
+              - 5512dad8-0704-439c-9f5b-78da63c15875
+      authorizationPolicy:
+        enabled: true
+        authorizedServices: []
+      networkPolicy:
+        enabled: true
+      defaultRouting:
+        # same host on blue and green, traffic is steered by the F5 XC origin pool priority below
+        hosts:
+          - example-api-tenant2.we.dev.kubeit.dnv.com
+        annotations:
+          # the cluster with the higher value receives the traffic; keep the opposite value in gitops/dev/blue
+          f5xc/priority: "1"
+        loadBalancerPolicy: ROUND_ROBIN
+        retries:
+          enabled: true
+          settings:
+            attempts: 3
+            perTryTimeout: 2s
