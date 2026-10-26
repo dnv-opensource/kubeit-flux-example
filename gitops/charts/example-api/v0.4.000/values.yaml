@@ -10,4 +10,3 @@ platform-service:
       enabled: true
       provider: generic
       interval: 1m
-
