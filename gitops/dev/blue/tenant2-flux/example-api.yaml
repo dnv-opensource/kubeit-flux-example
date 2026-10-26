@@ -66,12 +66,12 @@ spec:
       networkPolicy:
         enabled: true
       defaultRouting:
-        # same host on blue and green, traffic is steered by the F5 XC origin pool priority below
+        # same host on blue and green; the F5 XC origin pool priority below decides which cluster serves it
         hosts:
           - example-api-tenant2.we.dev.kubeit.dnv.com
         annotations:
-          # the cluster with the higher value receives the traffic; keep the opposite value in gitops/dev/green
-          f5xc/priority: "2"
+          # F5 XC: the lowest value is the active pool, higher values are standby. Blue is active; set the opposite in gitops/dev/green
+          f5xc/priority: "1"
         loadBalancerPolicy: ROUND_ROBIN
         retries:
           enabled: true
