@@ -67,8 +67,8 @@ spec:
         enabled: true
       defaultRouting:
         # same host on blue and green, traffic is steered by the F5 XC origin pool priority below
-        hosts:
-          - example-api-tenant2.we.dev.kubeit.dnv.com
+        internalHosts:
+          - example-api-tenant2.we.dev.kubeit-int.dnv.com
         annotations:
           # the cluster with the higher value receives the traffic; keep the opposite value in gitops/dev/green
           f5xc/priority: "2"
